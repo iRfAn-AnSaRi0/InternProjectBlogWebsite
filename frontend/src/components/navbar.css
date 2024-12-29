@@ -1,16 +1,38 @@
-/* Navbar container */
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Navbar Container */
 nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
+<<<<<<< HEAD
   padding: 1rem 4rem;
   background-color: #1e293b; /* Dark background */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   color: #ffffff;
+=======
+  background-color: #f8f9fa; /* Light background */
+  padding: 15px 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
+>>>>>>> 3de41b7c1a0763a28a6e4a8cf557757b8110b5c1
 }
 
-/* Logo */
+/* Navbar Brand/Logo */
 nav h2 {
+<<<<<<< HEAD
   font-size: 1rem;
   font-weight: bold;
   color: #fbbf24; /* logo color */
@@ -105,19 +127,98 @@ nav .btn a:nth-child(2):hover{
 
 
 /* Responsive Navbar */
+=======
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  text-transform: capitalize;
+  font-family: 'Playfair Display', serif; /* Elegant font for branding */
+  letter-spacing: 1px;
+  transition: color 0.3s ease;
+}
+
+nav h2:hover {
+  color: #007bff; /* Primary blue highlight */
+}
+
+/* Navbar Links */
+nav ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #555;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+nav ul li a:hover {
+  background-color: #007bff; /* Primary blue background */
+  color: white;
+}
+
+/* Call-to-Action Buttons */
+nav div:last-child {
+  display: flex;
+  gap: 15px;
+}
+
+nav div:last-child a {
+  text-decoration: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 20px;
+  border: 2px solid #007bff;
+  color: #007bff;
+  transition: all 0.3s ease;
+}
+
+nav div:last-child a:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Navbar Scroll Behavior */
+nav.scrolled {
+  background-color: #007bff;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+nav.scrolled h2,
+nav.scrolled ul li a {
+  color: white;
+}
+
+nav.scrolled div:last-child a {
+  color: #007bff;
+  background-color: white;
+}
+
+/* Responsive Design */
+>>>>>>> 3de41b7c1a0763a28a6e4a8cf557757b8110b5c1
 @media (max-width: 768px) {
   nav {
     flex-direction: column;
     align-items: flex-start;
+    padding: 15px;
   }
 
   nav ul {
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
   }
 
-  nav div {
-    margin-top: 10px;
+  nav div:last-child {
+    flex-direction: column;
+    gap: 10px;
   }
 }
 

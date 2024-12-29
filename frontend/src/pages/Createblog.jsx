@@ -1,12 +1,17 @@
 import './Createblog.css'
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
+<<<<<<< HEAD
 import API from "../axios/Axiosinstance";
 import Editblog from './Editblog';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+=======
+import './Createblog.css'
+
+>>>>>>> 3de41b7c1a0763a28a6e4a8cf557757b8110b5c1
 function Createblog() {
 
   const navigation = useNavigate()
@@ -54,9 +59,13 @@ sendData(values)
   };
 
   return (
+<<<<<<< HEAD
     <>
     <Navbar/>
     <section>
+=======
+    <div className="Createblog-page">
+>>>>>>> 3de41b7c1a0763a28a6e4a8cf557757b8110b5c1
       <div className="create-blog">
         <h2>Create a New Blog</h2>
 
@@ -109,9 +118,13 @@ sendData(values)
           )}
         </Formik>
       </div>
+<<<<<<< HEAD
     </section>
     <Footer/>
     </>
+=======
+    </div >
+>>>>>>> 3de41b7c1a0763a28a6e4a8cf557757b8110b5c1
   );
 }
 

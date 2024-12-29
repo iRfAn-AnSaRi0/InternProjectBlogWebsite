@@ -1,13 +1,17 @@
 import React from "react";
-import './Login.css'
 import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+<<<<<<< HEAD
 import { toast } from 'react-toastify';
 
 import API from "../axios/Axiosinstance";
 import { useNavigate } from "react-router-dom";
+=======
+// import ForgetPassword from "../pages/ForgetPassword"
+import './Login.css';
+>>>>>>> 3de41b7c1a0763a28a6e4a8cf557757b8110b5c1
 
 // Define the Yup validation schema
 const schema = yup.object().shape({
@@ -29,10 +33,13 @@ const schema = yup.object().shape({
 });
 
 function Login() {
+<<<<<<< HEAD
 
    const navigation = useNavigate()
 
 
+=======
+>>>>>>> 3de41b7c1a0763a28a6e4a8cf557757b8110b5c1
   // Form validation
   const {
     register: loginField,
@@ -43,6 +50,7 @@ function Login() {
     resolver: yupResolver(schema), // Integrate yup with react-hook-form
   });
 
+<<<<<<< HEAD
   const sendData = async(data)=>{
     try {
        const res = await API.post('user/login',data)
@@ -69,40 +77,45 @@ function Login() {
   const onSubmit = (data) => {
 
     sendData(data);
+=======
+  const onSubmit = (data) => {
+    console.log(data);
+>>>>>>> 3de41b7c1a0763a28a6e4a8cf557757b8110b5c1
     // After submit, reset the form fields
     reset();
   };
 
   return (
     <>
-      <div className="login-section">
-        <form onSubmit={handleSubmit(onSubmit)} className="login-form">
-          <h1>Login</h1>
-          <div className="form-group">
-            <input
-              type="email"
-              {...loginField("email")}
-              placeholder="Email"
-            />
-            {errors.email && <p className="error">{errors.email.message}</p>}
-          </div>
-          <div className="form-group">
-            <input
-              type="password"
-              {...loginField("password")}
-              placeholder="Password"
-            />
-            {errors.password && <p className="error">{errors.password.message}</p>}
-          </div>
-          <a href="/forgot-password">Forgot Password?</a>
-          <button className="login-btn">Login</button>
-          <p className="switch-login">
-            Don’t have an account? <Link to="/signup">Create Account</Link>
-          </p>
-          <p className="forgot-password">
-          </p>
-        </form>
+      <div className="login-page">
+        <div className="login-section">
+          <form onSubmit={handleSubmit(onSubmit)} className="login-form">
+            <h1 className="form-title">Login</h1>
+            <div className="form-group">
+              <input
+                type="email"
+                {...loginField("email")}
+                placeholder="Enter your e-mail"
+              />
+              {errors.email && <p className="error">{errors.email.message}</p>}
+            </div>
+            <div className="form-group">
+              <input
+                type="password"
+                {...loginField("password")}
+                placeholder="Enter your password"
+              />
+              {errors.password && <p className="error">{errors.password.message}</p>}
+            </div>
+            <button className="login-btn">Login</button>
+            <Link to="/ForgetPassword" className="forgot-link">Forget Password</Link>
+            <p className="switch-login">
+              Don’t have an account? <Link to="/signup">Create Account</Link>
+            </p>
+          </form>
+        </div>
       </div>
+
     </>
   );
 }

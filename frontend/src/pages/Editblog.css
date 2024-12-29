@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* General Styles */
 body {
   font-family: Arial, sans-serif;
@@ -36,10 +37,45 @@ section {
   margin-bottom: 8px;
 }
 
+=======
+/* Edit Blog Container */
+.edit-blog {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading */
+.edit-blog h2 {
+  text-align: center;
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Form Group */
+.form-group {
+  margin-bottom: 15px;
+}
+
+/* Label Styling */
+.form-group label {
+  display: block;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+/* Input and Textarea Styling */
+>>>>>>> 3de41b7c1a0763a28a6e4a8cf557757b8110b5c1
 .form-group input,
 .form-group textarea {
   width: 100%;
   padding: 10px;
+<<<<<<< HEAD
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -115,3 +151,40 @@ button:hover {
       font-size: 1rem;
   }
 }
+=======
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Input and Textarea Focus Effect */
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Textarea Height */
+.form-group textarea {
+  height: 150px;
+}
+
+/* Button Styling */
+.form-group button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+
+/* Button Hover Effect */
+.form-group button:hover {
+  background-color: #0056b3;
+}
+>>>>>>> 3de41b7c1a0763a28a6e4a8cf557757b8110b5c1

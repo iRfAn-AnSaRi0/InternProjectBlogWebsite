@@ -1,145 +1,104 @@
-/* General styles */
-/* body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  } */
-  
-  /* Login section */
-  .login-section {
-    background: #fff;
-    padding: 2.5rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 90%;
-    max-width: 500px;
-  }
-  
-  /* Form styles */
-  .login-form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .login-form h1 {
-    font-size: 28px;
-    color: #333;
-    text-align: center;
-    margin-bottom: 1.5rem;
-  }
-  
-  .form-group {
-    margin-bottom: 1.25rem;
-  }
-  
-  .form-group input {
-    width: 100%;
-    padding: 0.875rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-  }
-  
-  .form-group input:focus {
-    border-color: #007bff;
-    outline: none;
-    box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
-  }
-  
-  .error {
-    color: #d9534f;
-    font-size: 14px;
-    margin-top: 0.25rem;
-  }
-  
-  .login-btn {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 0.875rem;
-    font-size: 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .login-btn:hover {
-    background-color: #0056b3;
-  }
-  
-  .switch-login,
-  .forgot-password {
-    text-align: center;
-    margin-top: 1.25rem;
-    font-size: 14px;
-  }
-  
-  .switch-login a,
-  .forgot-password a {
-    color: #007bff;
-    text-decoration: none;
-    font-weight: bold;
-  }
-  
-  .switch-login a:hover,
-  .forgot-password a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 600px) {
-    .login-section {
-      padding: 1.5rem;
-    }
-  
-    .login-form h1 {
-      font-size: 22px;
-    }
-  
-    .form-group input {
-      padding: 0.75rem;
-      font-size: 14px;
-    }
-  
-    .login-btn {
-      padding: 0.75rem;
-      font-size: 14px;
-    }
-  
-    .switch-login,
-    .forgot-password {
-      font-size: 12px;
-    }
-  }
-  
-  @media (min-width: 1024px) {
-    .login-section {
-      padding: 3rem;
-      max-width: 600px;
-    }
-  
-    .login-form h1 {
-      font-size: 30px;
-    }
-  
-    .form-group input {
-      padding: 1rem;
-      font-size: 18px;
-    }
-  
-    .login-btn {
-      padding: 1rem;
-      font-size: 18px;
-    }
-  
-    .switch-login,
-    .forgot-password {
-      font-size: 16px;
-    }
-  }
-  
+/* Parent Wrapper to Scope the Styles */
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(120deg, #f5f7fa, #021836);
+}
+
+/* Login Section Styling */
+.login-section {
+  width: 100%;
+  max-width: 400px;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+/* Title Styling */
+.form-title {
+  font-size: 28px;
+  color: #333333;
+  ;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+/* Form Group Styling */
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 15px 5px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #6a11cb;
+}
+
+/* Forgot Password Link */
+.forgot-link {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  display: block;
+  margin: 10px 0;
+  font-size: 14px;
+  color: #6a11cb;
+  text-decoration: none;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+/* Error Message Styling */
+.login-form .error {
+  color: #e63946;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+/* Login Button Styling */
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(106, 17, 203, 0.5);
+}
+
+/* Switch Login Text */
+.switch-login {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.switch-login a {
+  color: #2575fc;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.switch-login a:hover {
+  text-decoration: underline;
+}

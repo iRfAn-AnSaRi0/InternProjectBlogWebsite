@@ -6,11 +6,16 @@ import Createblog from "./pages/Createblog";
 import Blog from "./pages/Blog";
 import Contribute from "./pages/Contribute";
 import Login from "./pages/Login";
+<<<<<<< HEAD
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Editblog from "./pages/Editblog";
 import Postblog from "./pages/Postblog";
 import Reading from "./pages/Reading";
+=======
+import axios from "axios"
+import Author from "./pages/Author";
+>>>>>>> 3de41b7c1a0763a28a6e4a8cf557757b8110b5c1
 // Other imports for your components
 
 function App() {
@@ -49,6 +54,7 @@ function App() {
   // }
   return (
     <>
+<<<<<<< HEAD
         <Router>
           {" "}
           {/* Only one Router component here */}
@@ -74,6 +80,21 @@ function App() {
             <Route path="/reading/:id" element={<Reading />} />
           </Routes>
         </Router>
+=======
+      <Router> {/* Only one Router component here */}
+        <Routes> {/* Define your routes here */}
+          <Route path="/" element={<Home />} /> {/* Correct spelling for "element" */}
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/createblog" element={<Createblog />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/contribute" element={<Contribute />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/author" element={<Author />} />
+        </Routes>
+      </Router>
+
+
+>>>>>>> 3de41b7c1a0763a28a6e4a8cf557757b8110b5c1
     </>
   );
 }
