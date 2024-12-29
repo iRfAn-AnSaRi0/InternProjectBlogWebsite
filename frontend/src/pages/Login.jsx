@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { toast } from 'react-toastify';
 
 import API from "../axios/Axiosinstance";
 import { useNavigate } from "react-router-dom";
@@ -31,6 +32,7 @@ function Login() {
 
    const navigation = useNavigate()
 
+
   // Form validation
   const {
     register: loginField,
@@ -43,23 +45,29 @@ function Login() {
 
   const sendData = async(data)=>{
     try {
-       const res = await API.post('/login',data)
-       const response = res.data.message;
-          console.log(localStorage);
-          console.log(response);
+       const res = await API.post('user/login',data)
+       const response = res.data.statusCode;
           
-        if(response == 'Login Successfully'){
-
+        if(response == 200){
+          toast.success("Login Successfully")
          navigation('/') 
+         
         }
     } catch (error) {
-       console.log(error);
+         const responsecode = error.response.data.statusCode;
+         const response = error.response.data.error[0];
+              if(responsecode == 400){
+                toast.error(response)
+              }
+        console.log(error);
+        
        
     }
      
   }
 
   const onSubmit = (data) => {
+
     sendData(data);
     // After submit, reset the form fields
     reset();

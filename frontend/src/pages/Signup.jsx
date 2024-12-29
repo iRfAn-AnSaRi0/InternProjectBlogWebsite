@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { toast } from 'react-toastify';
 
 // Define the Yup validation schema
 const schema = yup.object().shape({
@@ -44,24 +45,29 @@ function Signup() {
 
    const sendData = async(data)=>{
     try {
-       const res = await API.post('/signup',data)
-       const response = res.data.message;
-          console.log(localStorage);
+       const res = await API.post('user/signup',data)
+       const response = res.data.statusCode;
+          console.log(response.status);
+          
           console.log(response);
           
-        if(response == 'Success'){
-         navigation('/login') 
+        if(response == 200){
+          toast.success("Register Successfully")
+          navigation('/login') 
         }
     } catch (error) {
-       console.log(error);
-       
+    
+      const response = error.response.data.statusCode;
+      if(response == 400){
+        toast.error("User Already Exists")
+      }
+      
     }
      
   }
 
   const onSubmit = (data) => {
     sendData(data)
-    // After submit, reset the form fields
     reset();
   };
 

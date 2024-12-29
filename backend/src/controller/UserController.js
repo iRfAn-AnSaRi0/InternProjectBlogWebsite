@@ -28,14 +28,14 @@ const GenerateRefreshAndAccessToken = async (user) => {
 const Register = AsyncHandler(async (req, res) => {
     const { username, email, password } = req.body;
 
-    const userExists = await UserDetails.findOne({ email });
-
+    const userExists = await UserDetails.findOne({ email});
     if (userExists) {
         return res.status(400).json(
             new ApiError(
                 400,
                 "User Already Exists"
             )
+    
         )
     }
 
@@ -46,9 +46,9 @@ const Register = AsyncHandler(async (req, res) => {
     })
 
     if (userCreated) {
-        return res.status(201).json(
+        return res.status(200).json(
             new ApiResponse(
-                201,
+                200,
                 "Register Successfully"
             )
         )
@@ -70,9 +70,9 @@ const Login = AsyncHandler(async (req, res) => {
     const user = await UserDetails.findOne({ email });
 
     if (!user) {
-        return res.status(401).json(
+        return res.status(400).json(
             new ApiError(
-                401,
+                400,
                 "Invalid email"
             )
         )
@@ -82,9 +82,9 @@ const Login = AsyncHandler(async (req, res) => {
     const passwordcheck = await bcrypt.compare(password, user.password)
 
     if (!passwordcheck) {
-        return res.status(401).json(
+        return res.status(400).json(
             new ApiError(
-                401,
+                400,
                 "Invalid password"
             )
         )
@@ -94,7 +94,8 @@ const Login = AsyncHandler(async (req, res) => {
 
     const option = {
         httpOnly: true,
-        secure:true
+        // secure:true
+        
     }
 
     return res.status(200)
@@ -102,7 +103,7 @@ const Login = AsyncHandler(async (req, res) => {
         .cookie("AccessToken", AccessToken, option)
         .json(
             new ApiResponse(
-                201,
+                200,
                 { RefreshToken, AccessToken },
                 "Login Successfully"
             )
@@ -166,10 +167,16 @@ const RefreshTheToken = AsyncHandler(async (req, res) => {
 
     const Decode = jwt.verify(IncomingRefreshToken, process.env.REFRESH_TOKEN_SECRET)
 
-    const user = await UserDetails.findById(Decode?._id)
+   
+   
+    
+
+    const user = await UserDetails.findById(Decode.id);
+    
+    
 
     if (!user) {
-        throw new apiError(401, "Invalid Refresh token")
+        throw new ApiError(401, "Invalid Refresh token")
     }
 
 

@@ -1,62 +1,128 @@
-import React, { useState } from "react";
-import './Editblog.css'
+import './Editblog.css';
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import { toast } from 'react-toastify';
+import { useNavigate, useParams } from 'react-router-dom'; 
+import { useEffect, useState } from 'react';
+import API from "../axios/Axiosinstance"; 
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
-function Editblog() {
-  // State for the form fields (excluding blog thumbnail)
-  const [title, setTitle] = useState("My First Blog Post");
-  const [content, setContent] = useState("This is the content of the blog post. Here you can put a lot of interesting text that describes your topic.");
+function Updateblog() {
+  const { id } = useParams(); // Get the blogId from the URL parameters
+  const navigation = useNavigate();
+  const [blogData, setBlogData] = useState(null); 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Handle input changes
-  const handleTitleChange = (e) => {
-    setTitle(e.target.value);
+  // Yup validation schema
+  const validationSchema = Yup.object({
+    blogtitle: Yup.string().required("Blog title is required"),
+    blogcontent: Yup.string().required("Blog content is required"),
+  });
+
+  // Fetch blog data by id 
+  useEffect(() => {
+    const fetchBlogData = async () => {
+      try {
+        const response = await API.get(`/blog/blogs/${id}`);
+        setBlogData(response.data.data.blog); 
+        setLoading(false);
+      } catch (error) {
+        setError("Error fetching blog data");
+        setLoading(false);
+      }
+    };
+
+    fetchBlogData();
+  }, [id]);
+
+  // Handle form submission (simulate update)
+  const handleSubmit = async (values, { resetForm }) => {
+    try {
+      await API.put(`/blog/blogs/${id}`, values);
+      
+      toast.success("Blog updated successfully!");
+      navigation('/postblog');
+      resetForm();
+    } catch (error) {
+      toast.error("Failed to update the blog.");
+    }
   };
 
-  const handleContentChange = (e) => {
-    setContent(e.target.value);
-  };
+  // If blogData is not yet loaded, show loading state
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-  // Handle form submission
-  const handleUpdate = (e) => {
-    e.preventDefault();
-    // Normally, you would send the updated data to the backend or update the state
-    alert("Blog updated!");
-    console.log("Updated Blog:", { title, content });
-  };
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
-    <section className="edit-blog">
-      <h2>Edit Blog</h2>
-      
-      <form onSubmit={handleUpdate}>
-        <div className="form-group">
-          <label htmlFor="title">Blog Title</label>
-          <input
-            type="text"
-            id="title"
-            value={title}
-            onChange={handleTitleChange}
-            placeholder="Enter blog title"
-            required
-          />
-        </div>
+    <>
+    <Navbar/>
+    <section>
+      <div className="update-blog">
+        <h2>Update Blog</h2>
 
-        <div className="form-group">
-          <label htmlFor="content">Blog Content</label>
-          <textarea
-            id="content"
-            value={content}
-            onChange={handleContentChange}
-            placeholder="Enter blog content"
-            required
-          ></textarea>
-        </div>
+        <Formik
+          initialValues={{
+            blogtitle: blogData.blogtitle || "",
+            blogcontent: blogData.blogcontent || "",
+            blogthumbnailurl: blogData.blogthumbnailurl || null,
+          }}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+        >
+          {({ setFieldValue, errors, touched }) => (
+            <Form encType="multipart/form-data">
+              <div className="form-group">
+                <label htmlFor="blogtitle">Blog Title:</label>
+                <Field
+                  type="text"
+                  id="blogtitle"
+                  name="blogtitle"
+                  placeholder="Enter your blog title"
+                  className="input-field"
+                />
+                <ErrorMessage name="blogtitle" component="div" className="error" />
+              </div>
 
-        <div className="form-group">
-          <button type="submit">Update Blog</button>
-        </div>
-      </form>
+              <div className="form-group">
+                <label htmlFor="blogcontent">Blog Content:</label>
+                <Field
+                  as="textarea"
+                  id="blogcontent"
+                  name="blogcontent"
+                  placeholder="Write your blog content here..."
+                  className="input-field"
+                />
+                <ErrorMessage name="blogcontent" component="div" className="error" />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="blogthumbnailurl">Blog Thumbnail:</label>
+                <input
+                  type="file"
+                  id="blogthumbnailurl"
+                  name="blogthumbnailurl"
+                  onChange={(e) => setFieldValue("blogthumbnailurl", e.target.files[0])}
+                  accept="image/*"
+                  className="input-field"
+                />
+                <ErrorMessage name="blogthumbnailurl" component="div" className="error" />
+              </div>
+
+              <button type="submit">Update Blog</button>
+            </Form>
+          )}
+        </Formik>
+      </div>
     </section>
+    <Footer/>
+    </>
   );
 }
 
-export default Editblog;
+export default Updateblog;

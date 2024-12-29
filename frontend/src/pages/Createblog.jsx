@@ -1,34 +1,61 @@
-import { useState } from "react";
-import './Createblog'
+import './Createblog.css'
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-
+import API from "../axios/Axiosinstance";
+import Editblog from './Editblog';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 function Createblog() {
+
+  const navigation = useNavigate()
   // Initial form data
   const initialValues = {
-    title: "",
-    content: "",
-    thumbnail: null,
+    blogtitle: "",
+    blogcontent: "",
+    blogthumbnailurl: null,
   };
 
   // Yup validation schema
   const validationSchema = Yup.object({
-    title: Yup.string().required("Blog title is required"),
-    content: Yup.string().required("Blog content is required"),
-    thumbnail: Yup.mixed()
-      .required("Blog thumbnail is required")
-      .test("fileType", "Unsupported File Format", (value) =>
-        value ? ["image/jpeg", "image/png"].includes(value.type) : true
-      ),
+    blogtitle: Yup.string().required("Blog title is required"),
+    blogcontent: Yup.string().required("Blog content is required"),
   });
 
+
+  const sendData = async(values)=>{
+    try {
+       const res = await API.post('blog/blogs',values)
+       const response = res.data.statusCode;
+          
+          console.log(response);
+          
+         if(response == 200){
+           toast.success("Blog posted successfully!")
+           navigation('/postblog') 
+        }
+    } catch (error) {
+        const response = error.data.statusCode;
+        if(response == 500){
+          toast.error("Server error!")
+        }
+      
+    }
+     
+  }
+
   // Handle form submission
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, { resetForm }) => {
     console.log("Form data submitted:", values);
-    // Handle form data (send to API, etc.)
+sendData(values)
+    // Reset the form fields
+    resetForm();
   };
 
   return (
+    <>
+    <Navbar/>
     <section>
       <div className="create-blog">
         <h2>Create a New Blog</h2>
@@ -44,8 +71,8 @@ function Createblog() {
                 <label htmlFor="title">Blog Title:</label>
                 <Field
                   type="text"
-                  id="title"
-                  name="title"
+                  id="blogtitle"
+                  name="blogtitle"
                   placeholder="Enter your blog title"
                   className="input-field"
                 />
@@ -56,8 +83,8 @@ function Createblog() {
                 <label htmlFor="content">Blog Content:</label>
                 <Field
                   as="textarea"
-                  id="content"
-                  name="content"
+                  id="blogcontent"
+                  name="blogcontent"
                   placeholder="Write your blog content here..."
                   className="input-field"
                 />
@@ -68,8 +95,8 @@ function Createblog() {
                 <label htmlFor="thumbnail">Blog Thumbnail:</label>
                 <input
                   type="file"
-                  id="thumbnail"
-                  name="thumbnail"
+                  id="blogthumbnailurl"
+                  name="blogthumbnailurl"
                   onChange={(e) => setFieldValue("thumbnail", e.target.files[0])}
                   accept="image/*"
                   className="input-field"
@@ -83,6 +110,8 @@ function Createblog() {
         </Formik>
       </div>
     </section>
+    <Footer/>
+    </>
   );
 }
 

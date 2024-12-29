@@ -11,42 +11,6 @@ body{
     padding: 5px;
     background-color:#f1f5f9;}
 
-/* example */
-.hero-section{
-    height: 400px;
-    background-image:url("assets") ;
-    border: 1px solid;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    margin: 0 auto;
-}
-
-.featured-section , .about-section ,.call-section , .author-section, .community-section{
-    margin: 3rem 0;
-    height: auto;
-    border: 1px solid;
-}
-
-.tag-section .tag-cards{
-    display: flex;
-}
-
-.tag-section .tag-cards .tag{
-    border: 1px solid;
-}
-.author-section .author-cards .author{
-    border: 1px solid;
-}
-.community-section, .footer-section{
-    text-align: center;
-}
-.community-section .icon-cards {
-    display: flex;
-    justify-content: center;
-}
-
-
-.call-section{
-text-align: center;
+.Toastify{
+    position: absolute;
 }

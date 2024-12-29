@@ -2,13 +2,13 @@ import axios from 'axios';
 import Refreshtoken from '../utils/refreshtoken';
 
 const API = axios.create({
-  baseURL: 'http://localhost:8000/user',
+  baseURL: 'http://localhost:8000/',
   withCredentials: true,  // Allows sending cookies (for refresh tokens)
 });
 
 // Attach access token to every request
 API.interceptors.request.use((config) => {
-  const token = localStorage.getItem('accessToken');
+  const token = localStorage.getItem('AccessToken');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }

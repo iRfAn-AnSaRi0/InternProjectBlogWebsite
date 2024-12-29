@@ -1,16 +1,19 @@
 import "./App.css";
 import Home from "./pages/Home";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Import Router and Routes correctly
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; // Import Router and Routes correctly
 import Signup from "./pages/Signup";
-import Createblog from './pages/Createblog';
-import Blog from './pages/Blog'
+import Createblog from "./pages/Createblog";
+import Blog from "./pages/Blog";
 import Contribute from "./pages/Contribute";
 import Login from "./pages/Login";
-import axios from "axios"
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Editblog from "./pages/Editblog";
+import Postblog from "./pages/Postblog";
+import Reading from "./pages/Reading";
 // Other imports for your components
 
 function App() {
-
   // const [blogs, setBlogs] = useState([]);
   // const [loading, setLoading] = useState(true);
   // const [error, setError] = useState(null);
@@ -46,18 +49,31 @@ function App() {
   // }
   return (
     <>
-     <Router> {/* Only one Router component here */}
-       <Routes> {/* Define your routes here */}
-         <Route path="/" element={<Home />} /> {/* Correct spelling for "element" */}
-         <Route path="/signup" element={<Signup />} />
-         <Route path="/createblog" element={<Createblog />} />
-         <Route path="/blog" element={<Blog />} />
-         <Route path="/contribute" element={<Contribute />} />
-         <Route path="/login" element={<Login />} />
-       </Routes>
-     </Router>
-   
-    
+        <Router>
+          {" "}
+          {/* Only one Router component here */}
+          <ToastContainer />
+          <Routes>
+            {" "}
+            {/* Define your routes here */}
+            <Route path="/" element={<Home />} />{" "}
+            {/* Correct spelling for "element" */}
+            <Route path="/signup" element={<Signup />} />
+            <Route
+              path="/createblog"
+              element={
+                  <Createblog />
+              }
+            />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/contribute" element={<Contribute />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/postblog" element={<Postblog />} />
+            <Route path="/editblog/:id" element={<Editblog />} />
+            <Route path="/reading/:id" element={<Reading />} />
+          </Routes>
+        </Router>
     </>
   );
 }

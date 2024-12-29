@@ -17,6 +17,8 @@ const BlogComments = AsyncHandler(async (req, res) => {
         comment,
         user: userId
     })
+    console.log(comments);
+
 
     await Blog.findByIdAndUpdate(
         blogId,
@@ -37,7 +39,7 @@ const BlogComments = AsyncHandler(async (req, res) => {
     return res.status(200).json(
         new ApiResponse(
             200,
-            {},
+            { comments },
             "Comment"
         )
     )
@@ -45,18 +47,19 @@ const BlogComments = AsyncHandler(async (req, res) => {
 })
 
 const GetBlogWithComments = AsyncHandler(async (req, res) => {
-    const { blogId } = req.params.id;
+    const blogId = req.params.id;
 
-    const blog = await Blog.findById(blogId).select('blogcomment')
-        .populate({
-            path: 'blogcomment',
-                select: 'comment user',
-                populate: {
-                    path: 'user',
-                    model: 'UserDetails',
-                    select: 'username',
-                },
-        })
+
+
+    const blog = await Blog.findById(blogId).populate({
+        path: 'blogcomment',  // The path in your Blog model where comments are stored
+        populate: {
+            path: 'user',  // The field in your Comment schema referencing the User
+            select: 'username',  // Select fields to populate from the User schema (e.g., username)
+        },
+    });
+
+
 
     return res.status(200).json(
         new ApiResponse(
@@ -68,8 +71,56 @@ const GetBlogWithComments = AsyncHandler(async (req, res) => {
 });
 
 
+const DeleteComment = AsyncHandler(async (req, res) => {
+    const commentId = req.params.id;
+    const {blogId} = req.body;
+    console.log(commentId);
+
+    const user = await Blog.findById(blogId)
+console.log(user);
+
+     const comment = await BlogComment.findById(commentId)
+     if (!comment) {
+         return res.status(401).json(
+             new ApiError(
+                 401,
+                 {},
+                 "No comment"
+             )
+         )
+     }
+
+     const deletecomment = await BlogComment.deleteOne({ _id: comment })
+
+     await Blog.findByIdAndUpdate(
+        blogId,
+        { $pull: { blogcomment: commentId } },
+        { new: true }
+    )
+
+     if (!deletecomment) {
+         return res.status(500).json(
+             new ApiError(
+                 500,
+                 {},
+                 "Server error"
+             )
+         )
+     }
+
+
+    return res.status(200).json(
+        new ApiResponse(
+            200,
+            {user},
+            "comment deleted"
+        )
+    )
+});
+
+
 const BlogLike = AsyncHandler(async (req, res) => {
-    const  blogId  = req.params.id;
+    const blogId = req.params.id;
     const userId = req.user.id;
 
     const existingLike = await BlogLikes.findOne({ user: userId, blog: blogId });
@@ -77,7 +128,17 @@ const BlogLike = AsyncHandler(async (req, res) => {
 
     if (existingLike) {
         await existingLike.deleteOne();
+        await UserDetails.findByIdAndUpdate(
+            userId,
+            { $pull: { likedBlogs: blogId } },
+            { new: true }
+        );
 
+        await Blog.findByIdAndUpdate(
+            blogId,
+            { $pull: { bloglike: existingLike._id } },
+            { new: true }
+        );
         return res.status(200).json(
             new ApiResponse(
                 200,
@@ -91,7 +152,7 @@ const BlogLike = AsyncHandler(async (req, res) => {
         blog: blogId,
         user: userId,
     });
-   
+
 
     await BlogLikes.findByIdAndUpdate(
         blogId,
@@ -120,7 +181,7 @@ const BlogLike = AsyncHandler(async (req, res) => {
     return res.status(201).json(
         new ApiResponse(
             201,
-            {},
+            { newLike },
             "Blog liked successfully"
         )
     );
@@ -140,11 +201,11 @@ const GetBlogLikes = AsyncHandler(async (req, res) => {
     return res.status(200).json(
         new ApiResponse(
             200,
-            {likes},
+            { likes },
             "Likes fetched successfully"
         )
     );
 });
 
 
-export { BlogComments, GetBlogWithComments, BlogLike, GetBlogLikes }
+export { BlogComments, GetBlogWithComments, BlogLike, GetBlogLikes, DeleteComment }

@@ -115,28 +115,31 @@ const UpdateBlog = AsyncHandler(async (req, res) => {
 })
 
 const ShowAuthorAllBlogs = AsyncHandler(async (req, res) => {
-    const userId = req.params.id;
+    const userId = req.params.userId;
 
     const blogs = await Blog.find({ blogauthor: userId })
 
-    if (!blogs) {
-        return res.status(500).json(
-            new ApiError(
-                500,
-                {},
-                "Server Error"
-            )
-        )
-    }
-    if (blogs.length == 0) {
-        return res.status(200).json(
-            new ApiResponse(
-                200,
-                { message: "No Blog Found" },
-                "Blog fetch successfully"
-            )
-        )
-    }
+    console.log(userId);
+    
+
+     if (!blogs) {
+         return res.status(500).json(
+             new ApiError(
+                 500,
+                 {},
+                 "Server Error"
+             )
+         )
+     }
+     if (blogs.length == 0) {
+         return res.status(200).json(
+             new ApiResponse(
+                 200,
+                 { message: "No Blog Found" },
+                 "Blog fetch successfully"
+             )
+         )
+     }
 
     return res.status(200).json(
         new ApiResponse(
@@ -149,7 +152,7 @@ const ShowAuthorAllBlogs = AsyncHandler(async (req, res) => {
 })
 
 const ShowAllBlogs = AsyncHandler(async (_, res) => {
-    const blogs = await Blog.find();
+    const blogs = await Blog.find().populate("blogauthor", "username");
 
     if (!blogs) {
         return res.status(500).json(
@@ -169,5 +172,29 @@ const ShowAllBlogs = AsyncHandler(async (_, res) => {
         )
     )
 })
+const ShowBlogsByID = AsyncHandler(async (req, res) => {
+    const blogID = req.params.id
+    console.log(blogID);
+    
+    const blog = await Blog.findById(blogID).populate("blogauthor", "username");
 
-export { CreateBlog, DeleteBlog, UpdateBlog, ShowAuthorAllBlogs, ShowAllBlogs }
+    if (!blog) {
+        return res.status(500).json(
+            new ApiError(
+                500,
+                {},
+                "Server Error"
+            )
+        )
+    }
+
+    return res.status(200).json(
+        new ApiResponse(
+            200,
+            { blog },
+            "Success"
+        )
+    )
+})
+
+export { CreateBlog, DeleteBlog, UpdateBlog, ShowAuthorAllBlogs,ShowBlogsByID, ShowAllBlogs }
